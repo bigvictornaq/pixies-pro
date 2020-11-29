@@ -1,0 +1,32 @@
+{% extends "form_base.html" %}
+{% block head%}
+<title>Reset Password</title>
+{%endblock%}
+{% block body %}
+<div class="login-form">    
+    <form action="" method="POST">
+        {{form.hidden_tag()}}
+        <div class="avatar"><i class="fas fa-user-tie">&#xE7FF;</i></div>
+        <h4 class="modal-title">Borra Tu contrasena</h4>
+        <div class="form-group">
+    {% if form.email.errors %}
+            {{form.email(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+    {% else %}
+            {{form.email(class="form-control")}}
+    {% endif %}
+            <!--<input type="password" class="form-control" placeholder="Password" required="required">-->
+        </div>
+      bvc
+            {{form.submit(class="btn btn-primary btn-block btn-lg")}}
+        <!--<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">-->              
+    </form>			
+  
+</div>
+{% endblock %}
+
+{% block tail_js %}{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "form_base.html" %}
+{% block head%}
+<title>Iniciar Session!!</title>
+{%endblock%}
+{% block body %}
+<div class="login-form">    
+    <form action="" method="POST">
+        {{form.hidden_tag()}}
+        <div class="avatar"><i class="fas fa-user-tie">&#xE7FF;</i></div>
+        <h4 class="modal-title">Login to Your Account</h4>
+        <div class="form-group">
+    {% if form.email.errors %}
+            {{form.email(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+    {% else %}
+            {{form.email(class="form-control")}}
+    {% endif %}
+            <!--<input type="password" class="form-control" placeholder="Password" required="required">-->
+        </div>
+        <div class="form-group">
+    {% if form.password.errors %}
+            {{form.password(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+    {% else %}
+            {{form.password(class="form-control")}}
+    {% endif %}
+            <!--<input type="password" class="form-control" placeholder="Password" required="required">-->
+        </div>
+        <div class="form-group small clearfix">
+            {{form.remember(class="checkbox-inline")}}
+            {{form.remember.label(class="checkbox-inline")}}
+            <a href="{{url_for('reset_password')}}" class="forgot-link">Forgot Password?</a>
+        </div>
+            {{form.submit(class="btn btn-primary btn-block btn-lg")}}
+        <!--<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">-->              
+    </form>			
+    <div class="text-center small">Need An Account <a href="{{url_for('register')}}">Sign up</a></div>
+</div>
+{% endblock %}
+
+{% block tail_js %}{% endblock %}

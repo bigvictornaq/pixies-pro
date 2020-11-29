@@ -1,0 +1,129 @@
+{% extends 'base_home.html'%}
+
+{% block head %}
+<title>Informacion del Usurio</title>
+{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Hola {{current_user.username}}!!!, Puedes Editar tu Infomacion</h1>
+   
+  </div>
+  <div class="jumbotron">
+    <div class="card  text-white bg-dark" >
+        <h5 class="card-header">Informacion del Usuario</h5>
+        <div class="row no-gutters">
+            <div class="col-md-2">
+                <img src="{{image_file}}" class="img-fluid" alt="" >  
+              </div>
+
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h3 class="card-title"><i class="far fa-user-circle text-warning">&nbsp;Username: </i> {{current_user.username}}</h3>
+                    <h3 class="card-title"><i class="fas fa-at text-warning">&nbsp;Email: </i> {{current_user.email}}</h3>
+                    <h3 class="card-title"><i class="fas fa-at text-warning">&nbsp;ID: </i> {{current_user.public_id}}</h3>
+                    <button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal" data-target="#staticUpdate"><i class="fas fa-user-edit"></i>&nbsp;Update</button>
+                    
+                    <div class="modal fade" id="staticUpdate" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="sate" aria-hidden="true" role="dialog">
+                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="sate">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h2 class="text-primary" >Informacion a Actualizar</h2>
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    {{form.hidden_tag()}}
+                                    <div class="row justify-content-md-center border-bottom">
+                                      <div class="col-md-3 ml-auto">
+                                        <i class="fas fa-user-edit text-primary" style="font-size: 85px; text-shadow: 2px 2px 4px #000000;"></i> <br>
+                                      </div>
+                                      <div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
+                                    </div>  
+                                    
+                                    <br>
+                                    <div class="form-group">
+                            
+                                        {% if form.username.errors %}
+                                               {{form.username(class="form-control is-invalid")}}
+                                               <div class="invalid-feedback">
+                                                   {% for error in form.username.errors %}
+                                                          <span> {{ error }}</span>
+                                                   {% endfor %}
+                                               </div>
+                                        {%else%}
+                                               {{form.username(class="form-control")}}
+                                        {% endif %}
+                                        <!--<input type="text" class="form-control" placeholder="Username" required="required">-->
+                                    </div>
+                                    <div class="form-group">
+                                        {% if form.email.errors %}
+                                                {{form.email(class="form-control is-invalid")}}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.email.errors %}
+                                                            <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                        {% else %}
+                                                {{form.email(class="form-control")}}
+                                        {% endif %}
+                                        <!--<input type="password" class="form-control" placeholder="Password" required="required">-->
+                                    </div>
+                                    <div class="form-group">
+                                        {{form.foto.label(class="text-info")}}
+                                        {{form.foto(class="form-control-file")}}
+                                        {% if form.foto.errors %}
+                                                {% for error in form.foto.errors %}
+                                                   <span class="text-danger"> {{ error }}</span><br>
+                                                {% endfor %}
+                                        {% endif %}
+                                        
+                                    </div>
+                                        {{form.submit(class="btn btn-primary btn-block btn-lg")}}
+                                    <!--<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">-->              
+                                </form>			
+                                <div class="text-center small">Already Have An Account <a href="{{url_for('index')}}">Sign in</a></div>
+                            
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Understood</button>
+                            </div>
+                          </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+               </div>
+        </div>
+      </div>
+    <hr class="my-4">
+    
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+{% endblock %}
