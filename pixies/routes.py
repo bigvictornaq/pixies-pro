@@ -20,7 +20,7 @@ def index():
             login_user(usuarios,remember=form.remember.data)
             return redirect(url_for('analisis'))
         else:  
-            flash('Esta meco mijo esa no es carnal!! checa',category='error')    
+            flash('Lo siento, es no esta correctol!! checa EMAIL y Password',category='error')    
     return render_template('home.html',form=form)
 
 @app.route('/Registarte',methods=['GET','POST'])
