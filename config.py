@@ -7,7 +7,7 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']="postgresql://postgres:soda123@localhost:5432/soa"
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']="postgresql://postgres:soda123@192.168.0.102:5435/soa"
 
 class ProductionConfig(Config):
     DEBUG = False
