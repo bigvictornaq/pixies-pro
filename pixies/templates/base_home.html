@@ -42,9 +42,6 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="{{url_for('static',filename='css/dashboard.css')}}" rel="stylesheet">
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.css"> -->
-    <link href="{{url_for('static',filename='css/jquery-jvectormap-2.0.5.css')}}" rel="stylesheet">
-   <!--- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/r-2.2.6/datatables.min.css"/> -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.bootstrap4.min.css">
     {% block head%}{%endblock%}
 </head>
@@ -127,10 +124,6 @@
         <script src="https://cdn.datatables.net/responsive/2.2.6/js/responsive.bootstrap4.min.js"></script>    
         <script src= "{{url_for('static',filename='js/bootstrap.bundle.min.js')}}" ></script>    
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.js"></script> -->
-        <script src="{{url_for('static',filename='js/jquery-jvectormap-2.0.5.min.js')}}"></script>
-        <script src="{{url_for('static',filename='js/jquery-jvectormap-world-mill.js')}}"></script>
         <script src="{{url_for('static',filename='js/dashboarde.js')}}"></script></body>
         {% block tail_js %}{% endblock %}
 </html>

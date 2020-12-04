@@ -88,7 +88,7 @@
       <h5 class="card-title">Nueva Base de datos {{griselda}}</h5>
       <p class="card-text">Siguiente Informacion contierne los datos obtenidos de la base de datos dvdrental y ADVENTUREWORKS2017</p>
      
-        <button id="btnMostrar" name="submit_button" value="Hola bebe" class="btn btn-outline-warning">Unir datos</button>
+        <button id="btnMostrar" name="submit_button" value="Hola bebe" class="btn btn-outline-warning">Ver datos</button>
      <!-- <button id="submit" name="submit_button" value="Hola bebes" class="btn btn-outline-danger">Borrar datos</button> -->
       
       
@@ -105,7 +105,7 @@
     <h1 class="h2">Reporte de Analisis</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group mr-2">
-        <a href="{{url_for('pdfDownload')}}" class="btn btn-outline-secondary" target="_blank">Exportar a pdf</a>
+        <a href="{{url_for('pdfDownload')}}" class="btn btn-info" target="_blank">Exportar a pdf</a>
       </div>
     </div>
   </div>
@@ -126,9 +126,9 @@
     <hr/>
     <h3>Tabla Con los Clientes de ambas base de datos</h3>
     <div class="table-responsive border-bottom">
-      <table id="dataframe" class="table table-striped table-sm table-hover display nowrap" cellspacing="0">
+      <table id="dataframe" class="table table-striped  table-hover " cellspacing="0">
         <thead>
-          <tr class="table-dark">
+          <tr class="table-warning">
             <th>id</th>
             <th>Nombre</th>
             <th>Email</th>
@@ -141,7 +141,17 @@
         </thead>
         <tbody>  
         </tbody>
-        <tfoot></tfoot>
+        <tfoot>
+          <tr class="table-warning">
+            <th>id</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Direcccion</th>
+            <th>Zip code</th>
+            <th>Phone</th>
+            <th>Ciudad</th>
+            <th>Pais</th>
+        </tfoot>
       </table>
       <hr>
     </div>
@@ -195,7 +205,7 @@
 <div class="table-responsive-sm border-bottom">
 <table id="tbl_s" class="table table-striped  table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
 <thead>
-  <tr class="table-dark">
+  <tr class="table-warning">
     <th>Pais</th>
     <th>Numero De clientes</th>
   </tr>
@@ -208,6 +218,11 @@
       </tr>
   {% endfor %} 
 </tbody>
+<tfoot>
+  <tr class="table-warning">
+    <th>Pais</th>
+    <th>Numero De clientes</th>
+</tfoot>
 </table>
 <hr>
 </div>
@@ -222,7 +237,7 @@
   <div class="table-responsive-sm border-bottom">
    <table id="tbl_m" class="table table-striped table-sm  table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
      <thead>
-       <tr class="table-dark">
+       <tr class="table-warning">
          <th>Pais</th>
          <th>Numero De clientes</th>
        </tr>
@@ -236,7 +251,7 @@
        {% endfor %} 
      </tbody>
      <tfoot>
-      <tr class="table-dark">
+      <tr class="table-warning">
         <th>Pais</th>
         <th>Numero De clientes</th>
       </tr>
@@ -254,7 +269,7 @@
      <div id="t_gr" class="table-responsive-sm border-bottom ">
 <table id="tbl_g" class="table table-striped table-sm table-hover table-bordered dt-responsive nowrap" style="width: 100%;">
   <thead>
-    <tr class="table-dark">
+    <tr class="table-warning">
       <th>Pais</th>
       <th>Numero De clientes</th>
     </tr>
@@ -267,6 +282,12 @@
         </tr>
     {% endfor %} 
   </tbody>
+  <tfoot>
+    <tr class="table-warning">
+      <th>Pais</th>
+      <th>Numero De clientes</th>
+    </tr>
+  </tfoot>
 </table>
 <hr>
 </div>
@@ -274,11 +295,6 @@
 
 </div>
   <br>
-  
-<!---style="width: 600px; height: 400px"-->
-  <div id="world-map" style="width: 600px; height: 400px"></div>
-  <hr>
- <canvas class="my-4 w-100" id="gph_cutipa" width="900" height="380"></canvas>
 </div>
 {% endblock %}
 {% block tail_js %}
@@ -301,10 +317,9 @@ var tbl_s =   $('#tbl_s').DataTable({
   //tabla con los valores moda
  var tb =   $('#tbl_m').DataTable({
     responsive:true,
-    pageLength:50,
-    dom:'<"top"i>rt<"bottom"f><"clear">'
+    dom:'<"top"i>rt<"bottom"fp><"clear">'
   });
-
+//datos Estadisca en badges
 document.querySelector('#cantida').innerHTML ="N:" + tb_m.rows().count();
 document.querySelector('#cantid').innerHTML ="N:" + tbl_s.rows().count();
 document.querySelector('#cantidad').innerHTML ="N:" + tb.rows().count();
@@ -347,148 +362,8 @@ document.querySelector('#cantidad').innerHTML ="N:" + tb.rows().count();
 //boton que muestra la informacion de la fase 2
 btn1.on("click", function(){
 
-var datito;
-//Obtner los datos agrupados
-$.getJSON("{{url_for('paisG')}}",function(data){
-  var salve =null;
-  var codeName = {};
-  var ncode;
-  var ncame;
-  var cnts ={}
-  var continentsByGruoup ={}
-//datos por continent?
-$.ajax(
-{
-  url: "{{url_for('continentss')}}",
-  dataType: "json",
-  async: false,
-  success: function(data)
-  {
-    var continente = data.map(function(s){
-      return s.continent;
-    });
-    var pais = data.map(function(s){
-      return s.country;
-    })
-   
-   for (let i = 0; i < continente.length; i++) {
-        cnts[pais[i]] = continente[i]; 
-   }
-
-  }
-});
-  //Obtner los datos con code EU necesarios par mapa
-$.ajax(
-{
-  url: "{{url_for('codeguito')}}",
-  dataType: "json",
-  async: false,
-  success: function(data)
-  {
-    salve = data;
-  }
-});
-//obtner los datos por pais code?
-$.ajax(
-{
-  url: "{{url_for('codegui')}}",
-  dataType: "json",
-  async: false,
-  success: function(data)
-  {
-    ncode = data.map(function(d){
-      return d.Code
-    });
-    ncame = data.map(function(d){
-      return d.Name
-    });
-    
-    for(var j=0; j <ncode.length;j++){
-      codeName[ncame[j]] =ncode[j]; 
-    }
-  }
-}); 
-
-function cats(datito){
-
-  if(datito === "Kazakstan"){
-    var menso = "Kazakhstan"
-    return menso;
-  }else if(datito == "Congo, The Democratic Republic of the"){
-    var menso = "The Democratic Republic of Congo";
-    return menso;
-  }else{
-    return datito;
-  }
-
-}
-var piss;
-var nCliente;
-var objs = {};
-//objeto de pruebas
-var abs = {}
-var noodle;
-//obtner los datos del json en separados
-piss = data.data.map(function(d){
-return d.Pais
-});
-
-nCliente = data.data.map(function(d){
-return d.NumeroClientes
-});
-//los datos obtneidos convertidos en objeto para su manupulacion
-for(var i=0;i< piss.length;i++){
-  objs[piss[i]] = nCliente[i];
-}
-
-//pruebas
-for(var i=0;i<piss.length;i++){
- 
-  var sorete = codeName[piss[i]]
-  abs[sorete] = nCliente[i] 
-}
-//obtner la lista de pais por continentes continentsByGruoup
-var nelson;
-var asia = 0;
-for (let k = 0; k < piss.length; k++) {
-    var soledads = cats(piss[k])
-    var coconout = cnts[soledads]
-
-    if( coconout === "Asia"){
-
-      asia  = (nCliente[k] * 100) / 19107;
-    }
-      
-    
-}
-console.log(asia)
-
-//var valores = jvm.values.apply({},jvm.values(objs))
-$('#world-map').vectorMap({
-map: 'world_mill',
-series: {
-regions: [{
-  values:abs,
-  scale:  ['#FEE5D9', '#A50F15'],
-  normalizeFunction: 'polynomial',
-  legend:{
-    vertical:true
-  }
-}]
-},
-onRegionTipShow: function(e, el, code){
-  noodle = salve[code]
-  el.html(el.html()+' Numero de clientes - '+abs[code]+')');
-}
-
-});
-
-});
-
 mostrarDatos();
 $('#informacion').show();
-
-
 });
 
 });//final

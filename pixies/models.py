@@ -119,9 +119,7 @@ def datos_agrupados_porPais(grupo):
     func = switch.get(grupo,"Nelseon")
     return func()                       
 
-
-
-
+#datos pbtenidos
 def firstTendatos():
     query = text("SELECT pais, COUNT(pais) as clientes FROM public.analisis GROUP BY pais  having count(pais) > 175  ORDER BY clientes DESC;")
     paisbyCl = db.get_engine().execute(query)
@@ -133,7 +131,7 @@ class PDF(FPDF):
     #Encabezado del pdf
     def header(self):
         # Logo
-        self.image('pixies_web\static\profile_img\lgogo.png', 165, 8, 33)
+        self.image('pixies/static/profile_img/lgogo.png', 165, 8, 33)
         # Arial bold 15
         self.set_font('Arial', 'B', 25)
         # Se mueve a la derecha
