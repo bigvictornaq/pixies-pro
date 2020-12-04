@@ -1,1 +1,2 @@
-#Aplicacion Simple for images
+# Proyecto para La clase SOA
+## Desarrollado con FLASK
