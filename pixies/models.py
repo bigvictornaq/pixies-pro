@@ -57,15 +57,7 @@ class analizis(db.Model):
     def __repr__(self):
         return '<id_analisis{}>'.format(self.id_analisis)
 
-#contiene los datos solamente de los clientes
-def bd_dvrental():
-    try:
-        queri = text("with t1 as (Select *, first_name || ' ' || last_name AS full_name from customer) select full_name as Name, email as Email, address as Address,postal_code as zip, phone as Phone, city as Ciudad, country as Pais from t1  Join address  using (address_id)    join city   using (city_id) join country using (country_id)  join payment  using(customer_id)  group by 1,2,3,4,5,6,7")
-        data_todo = db.get_engine().execute(queri)
-        return data_todo
-    except IndentationError:
-        db.session.rollback()
-        return None
+
 
 
 #se aagrupan los datos por pais
@@ -86,8 +78,6 @@ def groupByPais():
 def calcularThreeM():
     querie = text("SELECT pais, COUNT('ID_Cliente') as cliente FROM public.analisis GROUP BY pais ORDER BY cliente DESC;")
     data = db.get_engine().execute(querie)
-
-    
     sumisa = []
     for t in data:
         sumisa.append(t[1])
@@ -129,33 +119,11 @@ def datos_agrupados_porPais(grupo):
     func = switch.get(grupo,"Nelseon")
     return func()                       
 
-#Uso de dataframes con pandas
-def create_dataframe_an():
-    engine_an = db.get_engine()
-    datafm = pd.read_sql_table('analisis',con=engine_an)
-    return datafm
 
-   #DATOS PARA EL MAPA DE LA DORA EXXPLORRADORA
-def dataforMap():
-    querie = text("SELECT pais, COUNT('ID_Cliente') as cliente FROM public.analisis GROUP BY pais ORDER BY cliente DESC;")
-    data = db.get_engine().execute(querie)
-    resultado = [{sa[0]:sa[1]} for sa in data]
-    return resultado
 
-#datos del mapa
-def dataMap():
-    querie = text("SELECT pais, COUNT('ID_Cliente') as cliente FROM public.analisis GROUP BY pais ORDER BY cliente DESC;")
-    data = db.get_engine().execute(querie)
-    resultado = [{"Pais":sa[0],"NumeroClientes":sa[1]} for sa in data]
-    return resultado
-
-#Vamos a crear Datos 
-def insert_Alld():
-    q = text("COPY public.klyients( nombre, email, address, zips, phone, ciudad, country) FROM 'D:\Development\Python\Catweb\msnas.csv' DELIMITER ',' CSV HEADER;commit;")
-    doll = db.get_engine().execute(q)
 
 def firstTendatos():
-    query = text("SELECT country, COUNT('ID_Cliente') as cliente FROM public.klyients GROUP BY country ORDER BY cliente DESC FETCH FIRST 10 ROWS ONLY;")
+    query = text("SELECT pais, COUNT(pais) as clientes FROM public.analisis GROUP BY pais  having count(pais) > 175  ORDER BY clientes DESC;")
     paisbyCl = db.get_engine().execute(query)
     return paisbyCl
 

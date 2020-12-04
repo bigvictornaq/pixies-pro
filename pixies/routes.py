@@ -1,9 +1,9 @@
 import os
 import datetime
-from flask import render_template, url_for,flash,redirect,request,json,jsonify,make_response
+from flask import render_template, url_for,flash,redirect,request,jsonify,make_response
 from pixies import app,db,bcrypt,Cloud,mail
 from pixies.forms import RegistrationForm,LoginForm,UpdateCuentaForm,RequestResetForm,ResetPasswordForm
-from pixies.models import User,analizis,calcularThreeM,datos_agrupados_porPais,firstTendatos,dataforMap,dataMap,PDF,groupByPais
+from pixies.models import User,analizis,calcularThreeM,datos_agrupados_porPais,firstTendatos,PDF,groupByPais
 from flask_login import login_user,current_user,logout_user,login_required
 from flask_mail import Message
 
@@ -20,7 +20,7 @@ def index():
             login_user(usuarios,remember=form.remember.data)
             return redirect(url_for('analisis'))
         else:  
-            flash('Esta meco mijo esa no es carnal!! checa',category='error')    
+            flash('Porfavor revisar Email y Password',category='error')    
     return render_template('home.html',form=form)
 
 @app.route('/Registarte',methods=['GET','POST'])
@@ -169,41 +169,6 @@ def pdfDownload():
     return response
 
 
-   #####Datos para suministarr la Mapita de la dora exploradora
 
-#son los datos sin nombre variable en json en forma [{}]
-@app.route('/pasitas')
-def pmapa():
-    da =dataforMap()
-    return jsonify(da) 
-
-#son los datos con nombre variable en json en forma [{}]
-@app.route('/pasitas/mapi')
-def mapita():
-    das =dataMap()
-    return jsonify(das)
-
-#son los datos todos los paises del munod en codigo EU como ejemplo
-@app.route('/codex')
-def codeguito():
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(SITE_ROOT,'static/data','names.json')
-    dato = json.load(open(json_url))
-    return dato
-
-@app.route('/ncodes')
-def codegui():
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(SITE_ROOT,'static/data','reeves.json')
-    dato = json.load(open(json_url))
-    return jsonify(dato)
-
-@app.route('/continents')
-def continentss():
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(SITE_ROOT,'static/data','continent.json')
-    dato = json.load(open(json_url))
-    return jsonify(dato)
-#33333333333333333333333333333333333333333333333333333333333333 
 
 
